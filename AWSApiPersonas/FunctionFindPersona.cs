@@ -15,7 +15,7 @@ namespace AWSApiPersonas
     public class FunctionFindPersona
     {
         public APIGatewayProxyResponse Find
-            (int id, string nombre, ILambdaContext context)
+            (int id, ILambdaContext context)
         {
             context.Logger.LogInformation("Get Find Request\n");
             RepositoryPersonas repo = new RepositoryPersonas();
@@ -35,7 +35,7 @@ namespace AWSApiPersonas
         }
 
         public APIGatewayProxyResponse InsertPersona
-            (Persona persona, string nombre, ILambdaContext context)
+            (Persona persona, ILambdaContext context)
         {
             context.Logger.LogInformation("POST Persona Request\n");
             var data = new
