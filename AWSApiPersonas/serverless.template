@@ -54,6 +54,32 @@
           }
         }
       }
+    },
+    "PostPersona": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Architectures": [
+          "x86_64"
+        ],
+        "Handler": "AWSApiPersonas::AWSApiPersonas.FunctionFindPersona::InsertPersona",
+        "Runtime": "dotnet6",
+        "CodeUri": "",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole"
+        ],
+        "Events": {
+          "RootGet": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/post",
+              "Method": "POST"
+            }
+          }
+        }
+      }
     }
   },
   "Outputs": {

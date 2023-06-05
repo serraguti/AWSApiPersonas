@@ -15,17 +15,40 @@ namespace AWSApiPersonas
     public class FunctionFindPersona
     {
         public APIGatewayProxyResponse Find
-            (APIGatewayProxyRequest request, ILambdaContext context)
+            (int id, string nombre, ILambdaContext context)
         {
             context.Logger.LogInformation("Get Find Request\n");
             RepositoryPersonas repo = new RepositoryPersonas();
-            Persona persona = repo.FindPersona(1);
+            Persona persona = repo.FindPersona(id);
             //CONVERTIMOS A JSON LA COLECCION DE PERSONAS
             string jsonPersona = JsonConvert.SerializeObject(persona);
             var response = new APIGatewayProxyResponse
             {
                 StatusCode = (int)HttpStatusCode.OK,
                 Body = jsonPersona,
+                Headers = new Dictionary<string, string>
+            {
+                { "Content-Type", "text/plain" }
+            }
+            };
+            return response;
+        }
+
+        public APIGatewayProxyResponse InsertPersona
+            (Persona persona, string nombre, ILambdaContext context)
+        {
+            context.Logger.LogInformation("POST Persona Request\n");
+            var data = new
+            {
+                Person = persona,
+                mensaje = "Persona insertada correctamente"
+            };
+            //CONVERTIMOS A JSON LA COLECCION DE PERSONAS
+            string jsonResponse = JsonConvert.SerializeObject(data);
+            var response = new APIGatewayProxyResponse
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = jsonResponse,
                 Headers = new Dictionary<string, string>
             {
                 { "Content-Type", "text/plain" }
